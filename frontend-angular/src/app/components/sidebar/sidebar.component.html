@@ -1,0 +1,18 @@
+<aside id="sidebar">
+    <div id="nav-blog" class="sidebar-item">
+        <h6>Añade un nuevo producto:</h6>
+        <a [routerLink]="['/home/crear']" class="btn btn-success">Añadir producto</a>
+
+    </div>
+
+    <div id="search" class="sidebar-item">
+        <h6>Busque aquí un producto:</h6>
+        <form #searchForm="ngForm" (ngSubmit)="goSearch()" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search" [(ngModel)]="searchString" [ngModelOptions]="{standalone: true}">
+            <button class="btn btn-info my-2 my-sm-2" type="submit">Buscar</button>
+        </form>
+    </div>
+
+</aside>
+
+<div class="clearfix"></div>

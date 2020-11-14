@@ -1,0 +1,35 @@
+<div class="center" *ngIf="products.length === 0">
+    <section id="content">
+        
+        <h5> 
+            No hay productos que coincidan con tu búsqueda
+        </h5>
+        
+    </section>
+    <a [routerLink]="['/home']" class="btn btn-outline-secondary">Atrás</a>
+    
+</div>
+
+<div class="center" *ngIf="products.length > 0">
+    <h4 class="subheader">{{title}}</h4>
+    <section id="content">
+
+        <div id="products" *ngFor="let product of products">
+            <article class="article-item">
+                <div class="image-wrap" >
+                    <img src="{{url + '/products/display/' + product.image}}" alt="{{product.name}}">
+                </div>
+
+                <h3>{{product.name}}</h3>
+                <span><strong>Precio: </strong>{{product.price}}€</span>
+                <p><strong>Descripción: </strong>{{product.description}}</p>
+                <button [routerLink]="['/home/editar', product.name]" class="btn btn-outline-primary" style="font-size:20px; color:rgba(124, 6, 160, 0.979)"> <i class="fa fa-pencil-square-o"></i>Editar</button>
+                <button (click)="delete(product.name)" class="btn btn-outline-dark" style="font-size:20px;color:red"> <i class="fa fa-close"></i>Borrar</button>
+                <div class="clearfix"></div>
+            </article>
+        </div>
+    </section>
+    <a [routerLink]="['/home']" class="btn btn-outline-secondary">Atrás</a>
+</div>
+
+

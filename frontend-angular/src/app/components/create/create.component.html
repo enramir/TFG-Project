@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <form class="form-horizontal" #productForm="ngForm" (ngSubmit)="onSubmit()">
+                    <fieldset>
+                        <legend class="text-center header">Añade un nuevo producto</legend>
+
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"></span>
+                            <div class="col-md-8">
+                                <span>
+                                    <i class="fa fa-laptop" aria-hidden="true"></i>
+                                </span>
+                                <input #name="ngModel" [(ngModel)]="product.name" id="name" name="name" type="text" placeholder="Nombre" class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" required>
+                                
+                            </div>
+                            <small *ngIf="!name.valid && name.touched">El nombre no es válido</small>
+                        </div>
+
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"></span>
+                            <div class="col-md-8">
+                                <span>
+                                    <i class="fa fa-eur" aria-hidden="true"></i>
+                                </span>
+                                
+                                <input #price="ngModel" [(ngModel)]="product.price" id="price" name="price" type="number" min="1" step="1" placeholder="Precio" class="form-control" pattern='([0-9]*[.])?[0-9]+$' required >
+                            </div>
+                            <small *ngIf="!price.valid && price.touched">El precio no es válido</small>
+                        </div>
+
+                        <div class="form-group">
+                            <span class="col-md-1 col-md-offset-2 text-center"></span>
+                            <div class="col-md-8">
+                                <span>
+                                    <i class="fa fa-info" aria-hidden="true"></i>
+                                </span>
+                                <textarea #description="ngModel" [(ngModel)]="product.description" class="form-control" id="description" name="description" placeholder="  Escriba una breve descripción para el producto mostrando sus principales características." rows="6" required></textarea>
+                            </div>
+                            <small *ngIf="!description.valid && description.touched">La descripción no es válida</small>
+                        </div>
+
+                        <div class="form-group">
+                            <angular-file-uploader
+                                [config]="afuConfig"
+                                (ApiResponse)="imageUpload($event)">
+                            </angular-file-uploader>
+                                
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 text-center">
+                                <button type="submit" value="Guardar" class="btn btn-outline-primary btn-lg" [disabled]="productForm.invalid">Añadir</button>
+                                <button [routerLink]="['/home']" class="btn btn-outline-secondary btn-lg">Atrás</button>
+                                
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

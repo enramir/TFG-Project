@@ -1,0 +1,43 @@
+.image-thumb img{
+    width: 150;
+}
+.header {
+    color: #36A0FF;
+    font-size: 27px;
+    padding: 10px;
+}
+
+.bigicon {
+    font-size: 35px;
+    color: #36A0FF;
+}
+
+.form-group {
+    width: 100%;
+    min-height: 45px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    padding-left: 50px;
+    padding-right: 20px;
+}
+
+span{
+    position: absolute;
+    margin-left: 5px;
+    height: 41px;
+    display: flex;
+    align-items: center;
+  }
+  input{
+    padding-left: 25px;
+    height: 40px;
+  }
+
+  input[type="file"],
+  textarea{
+      width: 50;
+      min-height: 30px;
+      padding: 3px;
+      margin-bottom: 5px;
+
+  }

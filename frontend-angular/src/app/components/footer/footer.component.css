@@ -1,0 +1,12 @@
+#footer{
+    background: #f7f7f7;
+    width: 100%;
+    height: 30%;
+    line-height: 30px;
+    color: #444;
+}
+
+#footer p {
+    margin: 0px;
+    padding-bottom: 10px;
+}

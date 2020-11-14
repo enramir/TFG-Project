@@ -1,0 +1,53 @@
+.subheader{
+    font-size: 30px;
+}
+
+#content{
+    width: 100%;
+    min-height: 45px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.article-item{
+    width: 70%;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    
+}
+
+.article-item .price{
+    display: block;
+    width: 100%;
+    color: rgb(122, 122, 122);
+}
+
+#products{
+    width: 130%;
+    
+}
+
+
+.article-item .image.wrap{
+    width: 130px;
+    height: 130px;
+    overflow: hidden;
+    float: left;
+    margin-right: 15px;
+    border: 1px solid #ccc;
+}
+
+.article-item .image-wrap img{
+    height: 100%;
+    text-align: center;
+}
+
+.article-item h3{
+    display: block;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 7px;
+}
