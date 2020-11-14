@@ -1,5 +1,4 @@
 var fs = require("fs");
-const { parse } = require("path");
 var path = require("path");
 
 module.exports = (app, BASE_PATH, products, md_upload) => {
