@@ -12,8 +12,6 @@ import { CreateComponent } from './components/create/create.component';
 import { EditComponent } from './components/edit/edit.component';
 
 
-
-
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
@@ -23,7 +21,7 @@ const appRoutes: Routes = [
     {path: 'adaptadores', component: AdaptadoresComponent},
     {path: 'buscar/:search', component: SearchComponent},
     {path: 'home/crear', component: CreateComponent},
-    {path: 'home/editar/:name', component: EditComponent},
+    {path: 'home/editar/:uuid', component: EditComponent},
     {path: '**', component: NotFoundComponent}
 ];
 

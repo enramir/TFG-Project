@@ -5,6 +5,7 @@ import Global from '../../Global';
 import { Redirect } from 'react-router-dom';
 import SimpleReactValidator from 'simple-react-validator';
 import swal from 'sweetalert';
+import { v1 as uuidv1 } from 'uuid';
 
 class Create extends Component {
 
@@ -34,6 +35,7 @@ class Create extends Component {
         this.setState({
             
             product: {
+                uuid: uuidv1(),
                 name: this.nameRef.current.value,
                 description: this.descriptionRef.current.value,
                 price: this.priceRef.current.valueAsNumber
@@ -67,6 +69,7 @@ class Create extends Component {
             
                             this.setState({
                                 product: {
+                                    uuid: this.state.product.uuid,
                                     name: this.state.product.name,
                                     description: this.state.product.description,
                                     price: this.state.product.price,
@@ -78,7 +81,7 @@ class Create extends Component {
                             
                             axios.post(this.URL + "/products", this.state.product)
                                 .then( res => {
-                                
+                                    console.log(res);
                                     if(res.data){
                                         this.setState({
                                             product: this.state.product,
@@ -102,8 +105,8 @@ class Create extends Component {
                                     });
 
                                     swal(
-                                        '¿Producto ya registrado?',
-                                        '¡No se puede insertar dos productos con el mismo nombre! Prueba con otro nombre.',
+                                        'Producto ya registrado',
+                                        '¡No se puede insertar dos productos iguales!',
                                         'error'
                                     ); 
                                 });
@@ -114,10 +117,18 @@ class Create extends Component {
                                 status: "failed"
                                 
                             });
+
                         }
                     });
 
         
+            }else{
+
+                swal(
+                    'Foto no adjuntada',
+                    'Sube una imagen del producto.',
+                    'error'
+                ); 
             }
             
 
@@ -126,6 +137,7 @@ class Create extends Component {
                 status: 'error'
             });
 
+            
             this.validator.showMessages();
             this.forceUpdate();
         }        

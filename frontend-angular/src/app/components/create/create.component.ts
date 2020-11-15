@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Global } from '../../services/global';
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
+import { v1 as uuidv1 } from 'uuid';
 
 const swal: SweetAlert = _swal as any;
 
@@ -48,18 +49,19 @@ export class CreateComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router
   ) { 
-    this.product = new Product('','',this.n,null);
+    this.product = new Product('','','',this.n,null);
     
    }
-
+ 
   ngOnInit(): void {
   }
 
   onSubmit(){
-    
+
+    this.product.uuid = uuidv1();
     this._productService.create(this.product).subscribe(
       response => {
-        
+        // console.log(response);
         if(response == 'Created'){
           
           // Alert
@@ -76,8 +78,14 @@ export class CreateComponent implements OnInit {
       error => {
         if(error.error == 'Conflict'){
           swal(
-            '¿Producto ya registrado?',
-            '¡No se puede insertar dos productos con el mismo nombre! Prueba con otro nombre.',
+            'Producto ya registrado',
+            '¡No se puede insertar dos productos iguales!',
+            'error'
+          );
+        }else if(error.error == 'Bad Request'){
+          swal(
+            '¡Foto no adjuntada!',
+            'Sube una imagen del producto.',
             'error'
           );
         }

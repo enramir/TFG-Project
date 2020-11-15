@@ -86,7 +86,7 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  delete(name){
+  delete(uuid){
 
     swal({
       title: "¿Estás seguro?",
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
     })
     .then((willDelete) => {
       if (willDelete) {
-        this._productService.delete(name).subscribe(
+        this._productService.delete(uuid).subscribe(
           response => {
             swal("¡El producto ha sido borrado!", {
               icon: "success",

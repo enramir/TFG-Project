@@ -48,7 +48,7 @@ export class EditComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router
   ) { 
-    this.product = new Product('','',this.n,'');
+    this.product = new Product('','','',this.n,'');
     this.url = Global.url;
    }
 
@@ -57,8 +57,8 @@ export class EditComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.product);
-    this._productService.update(this.product.name, this.product).subscribe(
+    
+    this._productService.update(this.product.uuid, this.product).subscribe(
       response => {
       
         if(response == 'OK'){
@@ -91,12 +91,12 @@ export class EditComponent implements OnInit {
   getProduct(){
     this._route.params.subscribe(params => {
       
-      let name = params['name'];
-      //console.log("name: "+name);
-      this._productService.getProduct(name).subscribe(
+      let uuid = params['uuid'];
+     
+      this._productService.getProduct(uuid).subscribe(
         response => {
           this.product = response;
-          console.log(this.product);
+          // console.log(this.product);
         },
         error => {
           console.log(error);
@@ -109,7 +109,7 @@ export class EditComponent implements OnInit {
 
   imageUpload(data){
     
-    //alert(data.body.image);
+    // alert(data.body.image);
     this.product.image = data.body.image;
   }
 

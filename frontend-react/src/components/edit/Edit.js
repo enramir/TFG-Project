@@ -22,8 +22,9 @@ class Edit extends Component {
 
     componentWillMount(){
         
-        this.productName = this.props.match.params.name;
-        this.getProduct(this.productName)
+        this.productUidd = this.props.match.params.name;
+        
+        this.getProduct(this.productUidd)
 
         this.validator = new SimpleReactValidator({
             messages: {
@@ -33,9 +34,9 @@ class Edit extends Component {
         });
     }
 
-    getProduct = (name) => {
+    getProduct = (uuid) => {
     
-        axios.get(this.URL + "/products/" + name)
+        axios.get(this.URL + "/products/" + uuid)
             .then( res => {
                 
                 this.setState({
@@ -52,7 +53,8 @@ class Edit extends Component {
         this.setState({
             
             product: {
-                name: this.props.match.params.name,
+                uuid: this.props.match.params.name,
+                name: this.nameRef.current.value,
                 description: this.descriptionRef.current.value,
                 price: this.priceRef.current.valueAsNumber,
                 image: this.state.product.image
@@ -84,6 +86,7 @@ class Edit extends Component {
             
                             this.setState({
                                 product: {
+                                    uuid: this.state.product.uuid,
                                     name: this.state.product.name,
                                     description: this.state.product.description,
                                     price: this.state.product.price,
@@ -93,7 +96,7 @@ class Edit extends Component {
                                 
                             });
          
-                            axios.put(this.URL + "/products/" + this.productName, this.state.product)
+                            axios.put(this.URL + "/products/" + this.productUidd, this.state.product)
                             .then( res => {
                             
                                 if(res.data){
@@ -136,7 +139,7 @@ class Edit extends Component {
     
             
                 }else{
-                    axios.put(this.URL + "/products/" + this.productName, this.state.product)
+                    axios.put(this.URL + "/products/" + this.productUidd, this.state.product)
                         .then( res => {
                         
                             if(res.data){
@@ -213,7 +216,7 @@ class Edit extends Component {
                                 <span>
                                 <i className="fa fa-laptop" aria-hidden="true" />
                                 </span>
-                                <input  id="name" name="name" type="text" style={{textAlign: 'center'}} defaultValue={this.state.product.name} className="form-control" readOnly="readonly" />
+                                <input  id="name" name="name" type="text" style={{textAlign: 'center'}} defaultValue={this.state.product.name} className="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" required ref={this.nameRef} onChange={this.changeState}/>
                             </div>
                             </div>
                             <div className="form-group">
@@ -239,7 +242,7 @@ class Edit extends Component {
 
                             <div className="form-group">
                                 <label htmlFor="file0"></label>
-                                <div class="image-thumb">
+                                <div className="image-thumb">
                                     <img src={this.URL + '/products/display/' + this.state.product.image} alt={this.state.product.name} className="thumb"/>
                                 </div>
                                 <input type="file" name="file0" onChange={this.fileChange}></input>

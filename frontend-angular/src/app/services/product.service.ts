@@ -30,8 +30,8 @@ export class ProductService{
         return this._http.get(this.url + "/products");
     }
 
-    getProduct(name):Observable<any>{
-        return this._http.get(this.url + "/products/" + name);
+    getProduct(uuid):Observable<any>{
+        return this._http.get(this.url + "/products/" + uuid);
     }
 
     search(searchString):Observable<any>{
@@ -45,24 +45,25 @@ export class ProductService{
         return this._http.post(this.url + "/products", data, {responseType: 'text'});
     }
 
-    update(name, product):Observable<any>{
+    update(uuid, product):Observable<any>{
         let data = product;
        
         var data_sinId = [];
         data_sinId.push({
+            "uuid": data.uuid,
             "name": data.name,
             "description": data.description,
             "price": data.price,
             "image": data.image
         });
-        
+         
 
-        return this._http.put(this.url + "/products/" + name, data_sinId[0], {responseType: 'text'});
+        return this._http.put(this.url + "/products/" + uuid, data_sinId[0], {responseType: 'text'});
     }
 
-    delete(name):Observable<any>{ 
+    delete(uuid):Observable<any>{ 
         
-        return this._http.delete(this.url + "/products/" + name, {responseType: 'text'});
+        return this._http.delete(this.url + "/products/" + uuid, {responseType: 'text'});
     }
 
     

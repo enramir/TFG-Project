@@ -1,5 +1,6 @@
 var fs = require("fs");
 var path = require("path");
+var ObjectId = require('mongodb').ObjectId;
 
 module.exports = (app, BASE_PATH, products, md_upload) => {
     console.log("Registering products API (v1)...");
@@ -22,13 +23,13 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
           });
     });
       
-    app.get(pathAPI + "/:name", (req, res) => {
+    app.get(pathAPI + "/:uuid", (req, res) => {
         
-        var name = req.params.name;
+        var uuid = req.params.uuid;
         
-        console.log("Registering get "+pathAPI+"/"+name);
+        console.log("Registering get "+pathAPI+"/"+uuid);
         
-        products.find({"name": name}).toArray((err, productsArray) => {
+        products.find({"uuid": uuid}).toArray((err, productsArray) => {
             if(err){
                 console.log("Error: " + err);
             }
@@ -44,11 +45,11 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
         console.log("Registering post "+pathAPI+"...");
         var newProduct = req.body;
 
-        products.find({"name": newProduct["name"]}).toArray( (err, productsArray) => {
+        products.find({"name": newProduct["name"], "price":newProduct["price"], "description": newProduct["description"]}).toArray( (err, productsArray) => {
 
             if(err) console.log("Error: "+ err);
 
-                    if(newProduct == "" || newProduct.name == null || newProduct.description == null || newProduct.price == null){
+                    if(newProduct == "" || newProduct.name == null || newProduct.description == null || newProduct.price == null || newProduct.image == null){
                         res.sendStatus(400, 'Bad Request');
                     }
                 
@@ -56,7 +57,7 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
                         
                         products.insert(newProduct);
                         console.log("Request accepted, creating new resource in database.");
-                        res.sendStatus(201, 'Created');
+                        res.sendStatus(201, 'Created'); 
                         
                     } else {
                         console.log("Error: Resource already exists in the database.");
@@ -67,31 +68,29 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
         });
     });
     
-    app.put(pathAPI + "/:name", (req, res) => {
+    app.put(pathAPI + "/:uuid", (req, res) => {
         
         var updateProduct = req.body;
-        var name = req.params.name;
+        var uuid = req.params.uuid;
 
-        console.log("Registering put "+pathAPI+"/"+name);
+        console.log("Registering put "+pathAPI+"/"+uuid);
 
-        products.find({"name": name}).toArray((err, productsArray) => {
+        products.find({"uuid": uuid}).toArray((err, productsArray) => {
             // console.log(productsArray);
             if(err){
                 console.log("Error: " + err);
             }
 
-            else if(updateProduct == "" || updateProduct.name == null || updateProduct.description == null || updateProduct.price == null){
+            else if(updateProduct == "" || updateProduct.name == null || updateProduct.description == null || updateProduct.price == null || updateProduct.image == null){
                 res.sendStatus(400, 'Bad Request');
             }
 
             else if(productsArray.length > 0){
-                if(name != updateProduct.name){
-                    res.sendStatus(409);
-                }else{
-                    products.update({"name": name}, updateProduct);
-                    // console.log(updateProduct);
-                    res.sendStatus(200);
-                }
+                
+                products.update({"uuid": uuid}, updateProduct);
+                // console.log(updateProduct);
+                res.sendStatus(200);
+                
                 
             }else{
                 res.sendStatus(404, "Resource not found");
@@ -100,11 +99,13 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
         });
     });
     
-    app.delete(pathAPI + "/:name", (req, res) => {
-        var name = req.params.name;
-        console.log("Registering delete "+pathAPI+"/"+name);
+    app.delete(pathAPI + "/:uuid", (req, res) => {
 
-        products.find({"name": name}).toArray((err, productsArray) => {
+        var uuid = req.params.uuid;
+        
+        console.log("Registering delete "+pathAPI+"/"+uuid);
+
+        products.find({"uuid": uuid}).toArray((err, productsArray) => {
             if(err){
                 console.log("Error: " + err);
             }
@@ -144,7 +145,7 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
     });
 
     //Upload image
-    app.post(pathAPI + "/upload/:name?", md_upload, (req, res) => {
+    app.post(pathAPI + "/upload/:uuid?", md_upload, (req, res) => {
         
         // console.log(req.files);
 
@@ -169,11 +170,11 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
 
         }else{
 
-            var nameProduct = req.params.name;
+            var uuid = req.params.uuid;
 
-            if(nameProduct){
+            if(uuid){
 
-                products.find({"name": nameProduct}, {new:true}).toArray((err, product) => {
+                products.find({"uuid": uuid}, {new:true}).toArray((err, product) => {
                     if(product.length == 0){
                         res.sendStatus(404, "Imagen no encontrada.");
                     }else{
@@ -218,7 +219,7 @@ module.exports = (app, BASE_PATH, products, md_upload) => {
     
 
     // method not allowed
-    app.post(pathAPI + "/:name", (req, res) => {
+    app.post(pathAPI + "/:uuid", (req, res) => {
             
         res.sendStatus(405, "Method Not Allowed!");
         

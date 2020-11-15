@@ -12,7 +12,7 @@
                                 <span>
                                     <i class="fa fa-laptop" aria-hidden="true"></i>
                                 </span>
-                                <input #name="ngModel" [(ngModel)]="product.name" id="name" name="name" type="text"  class="form-control" readonly="readonly">
+                                <input #name="ngModel" [(ngModel)]="product.name" id="name" name="name" type="text"  class="form-control" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" required>
                                 
                             </div>
                             
