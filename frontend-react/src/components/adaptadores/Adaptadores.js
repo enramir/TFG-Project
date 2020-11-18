@@ -38,7 +38,7 @@ class Adaptadores extends Component {
                 });
         }
 
-        deleteProduct = (name) => {
+        deleteProduct = (uuid) => {
             swal({
                 title: "¿Estás seguro?",
                 text: "¡Una vez borrado, no podrás recuperar el producto!",
@@ -49,7 +49,7 @@ class Adaptadores extends Component {
               .then((willDelete) => {
     
                 if(willDelete){
-                    axios.delete(this.URL + "/products/" + name)
+                    axios.delete(this.URL + "/products/" + uuid)
                     
                         .then( res => {
     
@@ -101,10 +101,10 @@ class Adaptadores extends Component {
                                             <h3>{filteredName.name}</h3>
                                             <span><strong>Precio: </strong>{filteredName.price}€</span>
                                             <p><strong>Descripción: </strong>{filteredName.description}</p>
-                                            <Link to={'/home/editar/' + filteredName.name} className="btn btn-outline-primary" style={{fontSize: '20px', color: 'rgba(124, 6, 160, 0.979)'}}> <i className="fa fa-pencil-square-o" />Editar</Link>
+                                            <Link to={'/home/editar/' + filteredName.uuid} className="btn btn-outline-primary" style={{fontSize: '20px', color: 'rgba(124, 6, 160, 0.979)'}}> <i className="fa fa-pencil-square-o" />Editar</Link>
                                                     <button onClick={
                                                         () => {
-                                                            this.deleteProduct(filteredName.name)
+                                                            this.deleteProduct(filteredName.uuid)
                                                         }
                                                     } className="btn btn-outline-dark" style={{fontSize: '20px', color: 'red'}}><i className="fa fa-close" />Borrar</button>
                                         </article>
